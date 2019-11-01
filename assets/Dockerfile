@@ -13,20 +13,15 @@ COPY nomad.ini /etc/supervisor.d/
 
 RUN curl -o /tmp/nomad.zip -L -s https://releases.hashicorp.com/nomad/0.10.0/nomad_0.10.0_linux_amd64.zip && \
     unzip -d /usr/local/bin/ /tmp/nomad.zip
-
 RUN mkdir -p /etc/nomad.d
-COPY nomad.hcl /etc/nomad.d/server.hcl
 
 RUN mkdir -p /opt/cni/bin && \
-    curl -o /tmp/cni.tar.gz -L https://github.com/containernetworking/plugins/releases/download/v0.8.1/cni-plugins-linux-amd64-v0.8.1.tgz && \
+    curl -o /tmp/cni.tar.gz -L https://github.com/containernetworking/plugins/releases/download/v0.8.2/cni-plugins-linux-amd64-v0.8.2.tgz && \
     tar -xzf /tmp/cni.tar.gz -C /opt/cni/bin
-
 
 RUN curl -o /tmp/consul.zip -L -s https://releases.hashicorp.com/consul/1.6.1/consul_1.6.1_linux_amd64.zip && \
     unzip -d /usr/local/bin/ /tmp/consul.zip
-
 RUN mkdir -p /etc/consul.d
-COPY consul.hcl /etc/consul.d/server.hcl
 
 ENTRYPOINT ["/usr/bin/supervisord"]
 CMD ["-c", "/etc/supervisord.conf"]

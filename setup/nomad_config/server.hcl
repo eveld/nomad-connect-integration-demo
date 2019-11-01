@@ -5,11 +5,6 @@ server {
   bootstrap_expect = 1
 }
 
-client {
-  enabled = true
-  network_speed = 100
-}
-
 plugin "raw_exec" {
   config {
     enabled = true

@@ -1,4 +1,4 @@
-data_dir = "/etc/consul.d/"
+data_dir = "/tmp/consul"
 log_level = "DEBUG"
 
 datacenter = "dc1"
