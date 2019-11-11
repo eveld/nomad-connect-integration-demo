@@ -1,58 +1,91 @@
 # Nomad 0.10: Secure Service-to-Service Traffic with Consul Connect Integration
 
-## Step 1
-Create nomad cluster
-Create consul cluster
+## Contents
 
-## Step 2
-Run a traditional application with old configuration
+This repository contains the demo used in the "Nomad 0.10: Secure Service-to-Service Traffic with Consul Connect Integration" webinar.
+To walk through the demo, use the steps outlined in the Makefile:
 
-## Step 3
-Add network stanza to use bridge networking
+```shell
+# Set up Nomad cluster and Consul server.
+make step1
 
-## Step 4
-Add sidecar stanza to get sidecar service
+# Open the Consul UI.
+open localhost:8500
+# Open the Nomad UI.
+open localhost:4646
+```
 
-## Step 5
-Add a static port to expose the application on the host
+```shell
+# Test bridge networking.
+make step2
 
-## Step 6
-Show capabilities of service mesh
+# Test the application. It should not work, because it's not exposed.
+curl <alloc ip>:9090
+```
 
-- Canary release
-- Route traffic to other services
-- Show migration
+```shell
+# Test network namespaces with a static port.
+make step3
 
+# Test the application. It should now work, because we bound it to the host.
+curl <alloc ip>:9090.
+```
 
+```shell
+# Deploy monolithic application.
+make step4
 
+curl localhost:9090
+```
 
-- newly announced features:
-    - storage
-    - ui enhancements
-    - networking
-    - connect integration
-- how does the networking work?
-    - CNI
-    - stanza
-    - modes
-    - static ports
-- how does connect work?
-    - what is a service mesh? control plane vs data plane
-    - sidecar injection
-    - service discovery
-    - security
-    - nomad sidecar stanza
-- service mesh features
-    - discovery chain
-    - service router
-    - service resolver
-    - service splitter
-- demo
-    - explain the scenario we want to go through
-        1. monolithic application, with the old service stanza
-        2. change the configuration to talk to localhost and add a sidecar service
-        3. break out micro-service, add service router to test if it works
-        4. deploy payments v2, add service resolver, update service router
-        5. add service splitter and slowly migrate to canary
-    - show the architecture
-    - do the demo
+```shell
+# Deploy currency microservice.
+make step5
+```
+
+```shell
+# Try out the currency microservice.
+make step6
+
+curl localhost:9090
+
+curl localhost:9090 -H 'group: dev'
+```
+
+```shell
+# Deploy new payments service.
+make step7
+```
+
+```shell
+# Create 2 subsets for the payments service.
+make step8
+```
+
+```shell
+# A/B test new payments service.
+make step9
+
+curl localhost:9090
+
+curl localhost:9090 -H 'group: test'
+```
+
+```shell
+# Send 50% of the traffic to the canary release.
+make step10
+
+curl localhost:9090
+```
+
+```shell
+# Send 100% of the traffic to the canary release.
+make step11
+
+curl localhost:9090
+```
+
+## Slides
+
+The slides for the webinar can be found in the `slides` directory.
+A link to the recording of the webinar will be added to the repository once it is available.

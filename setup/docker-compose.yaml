@@ -29,6 +29,7 @@ services:
     ports:
       - 4646:4646
       - 4647
+      - 9090
     networks:
       dc1:
         ipv4_address: 10.5.0.3
@@ -42,6 +43,7 @@ services:
     ports:
       - 4646
       - 4647
+      - 9090
     networks:
       dc1:
         ipv4_address: 10.5.0.10
@@ -55,6 +57,7 @@ services:
     ports:
       - 4646
       - 4647
+      - 9090
     networks:
       dc1:
         ipv4_address: 10.5.0.11
@@ -68,6 +71,7 @@ services:
     ports:
       - 4646
       - 4647
+      - 9090
     networks:
       dc1:
         ipv4_address: 10.5.0.12
